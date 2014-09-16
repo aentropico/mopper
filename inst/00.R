@@ -9,28 +9,24 @@ document()
 
 
 ### Get last word
-
-library(devtools)
-library(dplyr)
-library(tidyr)
-load_all()
-
 path <- system.file("masacres.csv", package="mopper")
-
 df <- read.csv(path, stringsAsFactors=FALSE)
 
 ### Mop last word
+s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
+mopLastWord(s)
 mopLastWord(df, cols=c("fuente","implicado"))
 
 ### Split fixed
 s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
 s <- "fdaf"
-mopSplitFixed(s, pattern="-", splitLength=3)
+mopSplitFixedPattern(s, pattern="-", splitLength=3)
 df <- tbl_df(df)
 s <- df
 select(s, lugar)
-tmp <- mopSplitFixed(s, pattern="-", splitLength=3, cols=c("lugar"))
+tmp <- mopSplitFixedPattern(s, pattern="-", splitLength=3, cols=c("lugar"))
 tmp <- tbl_df(tmp)
+tmp
 
 ### Trim white
 s <- "    CaseríoMulatos "

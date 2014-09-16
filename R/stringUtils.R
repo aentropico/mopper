@@ -1,11 +1,12 @@
 ## utils 
+#' @export
 removeAccents <- function(string){
   accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝñÑç"
   translation <- "aeiouAEIOUaeiouyAEIOUYnNc"
   chartr(accents, translation, string)
 }  
 
-
+#' @export
 dictionaryMatch <- function(inputStr,dict){
   l <- lapply(inputStr, function(inputStr){    
     inputStr <- tolower(inputStr)

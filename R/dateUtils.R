@@ -1,3 +1,4 @@
+#' @export
 transformDate <- function(s, from = "dmy1", to = NULL){ 
   l <- lapply(s, function(s){
     dateFormats <- list(

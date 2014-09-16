@@ -1,12 +1,9 @@
-#library(stringi)
-library(dplyr)
-library(plyr)
 
-#' Lastword
+#' mopLastword
 #' @name mopLastWord
 #' @description lastWord
 #' @param string
-#' @return logical TRUE if successful, FALSE if directory already exists
+#' @return string
 #' @export
 #' @examples \dontrun{
 #' }
@@ -32,7 +29,14 @@ mopLastWord <- function(s, cols=NULL){
   out
 }
 
-
+#' mopSplitFixedPattern
+#' @name mopSplitFixedPattern
+#' @description mopSplitFixedPattern
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopSplitFixedPattern <- function(s, pattern, splitLength = 2, cols=NULL){  
     stringSplitFun <- function(pattern, splitLength){      
       function(str){
@@ -54,6 +58,14 @@ mopSplitFixedPattern <- function(s, pattern, splitLength = 2, cols=NULL){
     out
 }
 
+#' mopWhiteSpace
+#' @name mopWhiteSpace
+#' @description mopWhiteSpace
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopWhiteSpace <- function(s, cols=NULL){
   trimWhite <- function(str){
     #str <- "  Caserío La Mesa-Veredas La Mesa, La Danta y Mulatos "
@@ -75,6 +87,14 @@ mopWhiteSpace <- function(s, cols=NULL){
   out  
 }
 
+#' mopStrChop
+#' @name mopStrChop
+#' @description mopStrChop
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
   strChop <- function(start,end){
     function(str){
@@ -98,6 +118,14 @@ mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
   out  
 } 
 
+#' mopAccents
+#' @name mopAccents
+#' @description mopAccents
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopAccents <- function(s, cols=NULL){
   f <- removeAccents
   if(class(s)=="character"){
@@ -115,6 +143,14 @@ mopAccents <- function(s, cols=NULL){
   out  
 }
 
+#' mopDictionaryMatch
+#' @name mopDictionaryMatch
+#' @description mopDictionaryMatch
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopDictionaryMatch <- function(s, dict, cols=NULL){  
   dicMatch <- function(dict){
     function(str){
@@ -140,6 +176,14 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
   out  
 }
 
+#' mopDates
+#' @name mopDates
+#' @description mopDates
+#' @param string
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
 mopDates <- function(s, from, to = NULL, cols=NULL){  
   transDate <- function(from, to){
     function(str){
