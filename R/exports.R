@@ -132,10 +132,6 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
     #cols <- c("fuente","implicado")
     colNums <- match(cols,names(dd)) %||% 1
     
-    df <- tbl_df(s)
-    colNums <- match(cols,names(df)) %||% 1      
-    out <- f(df[,colNums])  
-    
     out <- dd %>%
       select(colNums) %>%
       rowwise() %>%
@@ -144,27 +140,29 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
   out  
 }
 
+mopDates <- function(s, from, to = NULL, cols=NULL){  
+  transDate <- function(from, to){
+    function(str){
+      transformDate(str,from, to)
+    }
+  }
+  f <- transDate(from = from, to = to)
+  #unenclose(f)
+  if(class(s)=="character"){
+    out <- f(s) 
+  }
+  if("data.frame" %in% class(s)){ 
+    dd <- tbl_df(s)
+    #cols <- c("fuente","implicado")
+    colNums <- match(cols,names(dd)) %||% 1
 
-  
- ## utils 
-removeAccents <- function(string){
-  accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝñÑç"
-  translation <- "aeiouAEIOUaeiouyAEIOUYnNc"
-  chartr(accents, translation, string)
-}  
+    out <- dd %>%
+      select(colNums) %>%
+      rowwise() %>%
+      mutate_each(funs(f))
 
-
-dictionaryMatch <- function(inputStr,dict){
-  l <- lapply(inputStr, function(inputStr){    
-  inputStr <- tolower(inputStr)
-  inputStr <- removeAccents(inputStr)
-  dict_tmp <- tolower(dict)
-  dict_tmp <- removeAccents(dict_tmp)
-  tmp <- adist(inputStr, dict_tmp)
-  tmp <- as.vector(tmp)
-  dict[which.min(tmp)]
-  })
-  unlist(l)
+  }
+  out  
 }
 
-
+  

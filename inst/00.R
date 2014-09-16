@@ -8,25 +8,7 @@ document()
 
 
 
-dateFormats <- list(
-  dm = "21-Sep",
-  md1 = "Sep 21",
-  md2 = "Sep-21"
-  md1 = "9/21",
-  md2 = "09-21",
-  dmy1 = "21/09/2014",
-  dmy2 = "21-09-2014",
-  mdy1 = "09/21/2014",
-  mdy2 = "9/21/14",
-  mdy3 = "09-21-14",
-  mdy4 = "September 21, 2014",
-  dmy3 = "21-Sep-2014",
-  ymd1 = "2014-09-21"  
-  )
-
-
-
-### Get las word
+### Get last word
 
 library(devtools)
 library(dplyr)
@@ -71,24 +53,23 @@ mopAccents(df,cols=c('b'))
 
 ### dictionaryMatch
 mopDictionaryMatch("uss.a",c("USA","united"))
-df <- data.frame(a = sample(c("usa","unitted"),20, replace=TRUE))
-df$match <- mopDictionaryMatch(df,dict = c("US.A","united"))
+df <- data.frame(a1 = sample(c("us.a","unitted"),20, replace=TRUE))
+df$match <- mopDictionaryMatch(df,dict = c("USA","united"))
 df
+
+### Date parser
+s <- "21-Sep-2014"
+mopDates(s, from="dmy3")
+df <- data.frame(a = sample(c("21-Sep-2014","20-Aug-2011"),20, replace=TRUE))
+str(mopDates(df, from="dmy3"))
+str(mopDates(df, from="dmy3", to="mdy2"))
+
+
+
 
 
 
 ### locations form IP
-
-
-
-
-##
-
-
-
-
-
-## IP
 
 library(httr)
 #V1

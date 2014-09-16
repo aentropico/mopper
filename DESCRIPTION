@@ -8,4 +8,4 @@ Maintainer: Juan Pablo Marin Diaz <jpmarindiaz@gmail.com>
 Description: Makes data nicely formated to be used with dapackager. Eventually will be part of the datapackager.
 License: GPL3
 Depends:
-    R (>= 3.0.0),lubridate, reshape2
+    R (>= 3.0.0),lubridate, reshape2, dplyr, stringi

@@ -5,10 +5,10 @@
 - Separate by character fixed positions
 - Remove accents
 - Approximate match from category keywords (e.g. quiénes son directores)
-- Locations from IP
+- Transform dates
 
 # TODO's 
-- Transform dates
+- Locations from IP
 - Get firstname and lastname (Colombia, Brazil)
 - Address to Lat Long (Bogotá)
 - get region/city from telephone (brazil, usa)
@@ -23,4 +23,4 @@
 - Numeric conversion (comma separated, points, etc)
 - Strings: to upper case, tolower, to title case
 - Check for duplicates
-- 
+
