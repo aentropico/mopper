@@ -9,7 +9,7 @@
 #' @examples \dontrun{
 #' }
 mopWord <- function(s, pos ="first",cols=NULL){
-    getLastWord <- function(pos){
+    getWord <- function(pos){
       #str <- "Caserío La Mesa-Veredas La Mesa, La Danta y Mulatos"
       #stringi:::stri_extract_last(str, regex="\\w+")
       ##stringi:::stri_extract_last(s, regex="[:alnum:]+$")   
@@ -23,24 +23,28 @@ mopWord <- function(s, pos ="first",cols=NULL){
           out <- word(str,-1)
         }
 
-#         else if(!pos %in% c("first","last") ){
-#           stop("Specify pos='first' or pos='last'")
-#         }
+        # else if(!pos %in% c("first","last") ){
+        #   stop("Specify pos='first' or pos='last'")
+        # }
         out
       }
     } 
-   f <- getLastWord(pos = pos)
+   f <- getWord(pos = pos)
   if(class(s)=="character"){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
-    df <- tbl_df(s)
-    #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df)
-    out <- df %>%
-            select(colNums) %>%
-            rowwise() %>%
-            mutate_each(funs(f))
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
+    # df <- tbl_df(s)
+    # #cols <- c("fuente","implicado")
+    # colNums <- match(cols,names(df)) %||% 1:ncol(df)
+    # out <- df %>%
+    #         select(colNums) %>%
+    #         rowwise() %>%
+    #         mutate_each(funs(f))
   }
   out
 }
@@ -64,13 +68,20 @@ mopSplitFixedPattern <- function(s, pattern, splitLength = 2, cols=NULL){
     #unenclose(f)
     if(class(s)=="character"){
       out <- f(s) 
+      names(out) <- paste("COL",1:splitLength, sep=".")
     }    
     if("data.frame" %in% class(s)){ 
-      df <- tbl_df(s)
-      colNums <- match(cols,names(df)) %||% 1:ncol(df)      
-      out <- f(df[,colNums])     
+      colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+      if(length(colNums)==1){
+        out <- f(s[,colNums])
+        names(out) <- paste(names(s)[colNums],1:splitLength, sep=".")
+      } else{
+        df <- as.data.frame(s[,colNums])
+        names(df) <- names(s)[colNums]
+        l <- lapply(df, f)
+        out <- do.call(cbind,l)        
+      }   
     }
-    names(out) <- paste0("col",1:splitLength)
     out
 }
 
@@ -92,13 +103,17 @@ mopWhiteSpace <- function(s, cols=NULL){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
-    df <- tbl_df(s)
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
+    #df <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df)
-    out <- df %>%
-      select(colNums) %>%
-      rowwise() %>%
-      mutate_each(funs(f))
+    #colNums <- match(cols,names(df)) %||% 1:ncol(df)
+    #out <- df %>%
+    #  select(colNums) %>%
+    #  rowwise() %>%
+    #  mutate_each(funs(f))
   }
   out  
 }
@@ -123,13 +138,17 @@ mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
-    df <- tbl_df(s)
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
+    #df <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df)
-    out <- df %>%
-      select(colNums) %>%
-      rowwise() %>%
-      mutate_each(funs(f))
+    #colNums <- match(cols,names(df)) %||% 1:ncol(df)
+    #out <- df %>%
+    #  select(colNums) %>%
+    #  rowwise() %>%
+    #  mutate_each(funs(f))
   }
   out  
 } 
@@ -148,13 +167,17 @@ mopAccents <- function(s, cols=NULL){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
-    df <- tbl_df(s)
-    #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df)
-    out <- df %>%
-      select(colNums) %>%
-      rowwise() %>%
-      mutate_each(funs(f))
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
+    #df <- tbl_df(s)
+    ##cols <- c("fuente","implicado")
+    #colNums <- match(cols,names(df)) %||% 1:ncol(df)
+    #out <- df %>%
+    #  select(colNums) %>%
+    #  rowwise() %>%
+    #  mutate_each(funs(f))
   }
   out  
 }
@@ -180,14 +203,18 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
-    dd <- tbl_df(s)
-    #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(dd)) %||% 1:ncol(df)
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
     
-    out <- dd %>%
-      select(colNums) %>%
-      rowwise() %>%
-      mutate_each(funs(f))
+    #dd <- tbl_df(s)
+    ##cols <- c("fuente","implicado")
+    #colNums <- match(cols,names(dd)) %||% 1:ncol(df)  
+    #out <- dd %>%
+    #  select(colNums) %>%
+    #  rowwise() %>%
+    #  mutate_each(funs(f))
   }
   out  
 }
@@ -211,16 +238,18 @@ mopDates <- function(s, from, to = NULL, cols=NULL){
   if(class(s)=="character"){
     out <- f(s) 
   }
-  if("data.frame" %in% class(s)){ 
-    dd <- tbl_df(s)
-    #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(dd)) %||% 1:ncol(df)
-
-    out <- dd %>%
-      select(colNums) %>%
-      rowwise() %>%
-      mutate_each(funs(f))
-
+  if("data.frame" %in% class(s)){
+    colNums <- match(cols,names(s)) %||% 1:ncol(s) 
+    df <- as.data.frame(s[,colNums])
+    names(df) <- names(s)[colNums]
+    out <- as.data.frame(sapply(df, f))
+    #dd <- tbl_df(s)
+    ##cols <- c("fuente","implicado")
+    #colNums <- match(cols,names(dd)) %||% 1:ncol(df)
+    #out <- dd %>%
+    #  select(colNums) %>%
+    #  rowwise() %>%
+    #  mutate_each(funs(f))
   }
   out  
 }

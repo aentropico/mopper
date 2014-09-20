@@ -20,21 +20,21 @@ mopWord(s, pos="last")
 mopWord(df$implicado, pos="last")
 mopWord(mopWhiteSpace(df$implicado), pos="last")
 mopWord(df[,c("fuente","implicado")])
-
-mopLastWord(df$fuente)
+str(mopWord(df, cols = c("fuente")))
+mopWord(df$fuente)
 
 
 
 ### Split fixed
+load_all()
 s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
 s <- "fdaf"
 mopSplitFixedPattern(s, pattern="-", splitLength=3)
-df <- tbl_df(df)
 s <- df
-select(s, lugar)
 tmp <- mopSplitFixedPattern(s, pattern="-", splitLength=3, cols=c("lugar"))
-tmp <- tbl_df(tmp)
-tmp
+str(tmp)
+tmp <- mopSplitFixedPattern(s, pattern="-", splitLength=3, cols=c("lugar","implicado"))
+str(tmp)
 
 ### Trim white
 s <- "    CaseríoMulatos "
@@ -47,13 +47,13 @@ mopWhiteSpace(df, cols=c('b','a'))
 s <- "CCaseríoMulatos "
 mopStrChop(s, start=3, end=40)
 df <- data.frame(a = rep(s,10), b=rep(s,10))
-mopStrChop(df, start=3, end= 7,cols=c('b'))
+mopStrChop(df, start=3, end= 7,cols=c('b','a'))
 
 ### Mop accents
 s <- "CCaseríoMulatosáá''d "
 mopAccents(s)
 df <- data.frame(a = rep(s,10), b=rep(s,10))
-mopAccents(df,cols=c('b'))
+mopAccents(df,cols=c('b','b'))
 
 ### dictionaryMatch
 mopDictionaryMatch("uss.a",c("USA","united"))
