@@ -11,6 +11,5 @@ License: GPL3
 Depends:
     R (>= 3.0.0),lubridate,
     reshape2,
-    stringi,
     dplyr,
     stringr

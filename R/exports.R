@@ -1,19 +1,35 @@
 
-#' mopLastword
-#' @name mopLastWord
-#' @description lastWord
-#' @param string
+#' mopWord
+#' @name mopWord
+#' @description mopWord
+#' @param s string or dataframe
+#' @param pos string, "first" or "last"
 #' @return string
 #' @export
 #' @examples \dontrun{
 #' }
-mopLastWord <- function(s, cols=NULL){
-    getLastWord <- function(str){
+mopWord <- function(s, pos ="first",cols=NULL){
+    getLastWord <- function(pos){
       #str <- "Caserío La Mesa-Veredas La Mesa, La Danta y Mulatos"
-      stringi:::stri_extract_last(str, regex="\\w+")
+      #stringi:::stri_extract_last(str, regex="\\w+")
       ##stringi:::stri_extract_last(s, regex="[:alnum:]+$")   
+      #str_extract(str, '\\w+$')
+      function(str){
+        
+        if(pos=="first"){ 
+          out <- word(str,1)
+        }
+        else if(pos=="last"){
+          out <- word(str,-1)
+        }
+
+#         else if(!pos %in% c("first","last") ){
+#           stop("Specify pos='first' or pos='last'")
+#         }
+        out
+      }
     } 
-   f <- getLastWord 
+   f <- getLastWord(pos = pos)
   if(class(s)=="character"){
     out <- f(s) 
   }

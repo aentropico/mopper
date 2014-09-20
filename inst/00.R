@@ -14,8 +14,13 @@ df <- read.csv(path, stringsAsFactors=FALSE)
 
 ### Mop last word
 s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
-mopLastWord(s)
-mopLastWord(df, cols=c("fuente","implicado"))
+s <- "Guerrilla-FARC u otro"
+mopWord(s, pos="first")
+mopWord(s, pos="last")
+mopWord(df$implicado, pos="last")
+mopWord(mopWhiteSpace(df$implicado), pos="last")
+mop
+mopLastWord(df$fuente)
 
 ### Split fixed
 s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
