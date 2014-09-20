@@ -30,7 +30,8 @@ mopWord <- function(s, pos ="first",cols=NULL){
       }
     } 
    f <- getWord(pos = pos)
-  if(class(s)=="character"){
+  if(class(s) =="factor") s <- as.character(s)
+  if(class(s) == "character"){
     out <- f(s) 
   }
   if("data.frame" %in% class(s)){ 
@@ -66,6 +67,7 @@ mopSplitFixedPattern <- function(s, pattern, splitLength = 2, cols=NULL){
     f <- stringSplitFun(pattern = pattern, splitLength = splitLength)     
     #library(pryr)
     #unenclose(f)
+    if(class(s) =="factor") s <- as.character(s)
     if(class(s)=="character"){
       out <- f(s) 
       names(out) <- paste("COL",1:splitLength, sep=".")
@@ -99,6 +101,7 @@ mopWhiteSpace <- function(s, cols=NULL){
     stringr:::str_trim(str)  
   } 
   f <- trimWhite 
+  if(class(s) =="factor") s <- as.character(s)
   if(class(s)=="character"){
     out <- f(s) 
   }
@@ -134,6 +137,7 @@ mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
     }
   }
   f <- strChop(start = start, end = end)
+  if(class(s) =="factor") s <- as.character(s)
   if(class(s)=="character"){
     out <- f(s) 
   }
@@ -163,6 +167,7 @@ mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
 #' }
 mopAccents <- function(s, cols=NULL){
   f <- removeAccents
+  if(class(s) =="factor") s <- as.character(s)
   if(class(s)=="character"){
     out <- f(s) 
   }
@@ -198,7 +203,7 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
     }
   }
   f <- dicMatch(dict)
-
+  if(class(s) =="factor") s <- as.character(s)
   if(class(s)=="character"){
     out <- f(s) 
   }
@@ -235,6 +240,7 @@ mopDates <- function(s, from, to = NULL, cols=NULL){
   }
   f <- transDate(from = from, to = to)
   #unenclose(f)
+  if(class(s) =="factor") s <- as.character(s)
   if(class(s)=="character"){
     out <- f(s) 
   }
