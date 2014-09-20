@@ -67,7 +67,7 @@ mopSplitFixedPattern <- function(s, pattern, splitLength = 2, cols=NULL){
     }    
     if("data.frame" %in% class(s)){ 
       df <- tbl_df(s)
-      colNums <- match(cols,names(df)) %||% 1:ncol(df      
+      colNums <- match(cols,names(df)) %||% 1:ncol(df)      
       out <- f(df[,colNums])     
     }
     names(out) <- paste0("col",1:splitLength)
@@ -94,7 +94,7 @@ mopWhiteSpace <- function(s, cols=NULL){
   if("data.frame" %in% class(s)){ 
     df <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df
+    colNums <- match(cols,names(df)) %||% 1:ncol(df)
     out <- df %>%
       select(colNums) %>%
       rowwise() %>%
@@ -125,7 +125,7 @@ mopStrChop <- function(s, start = 1, end = 2, cols=NULL){
   if("data.frame" %in% class(s)){ 
     df <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df
+    colNums <- match(cols,names(df)) %||% 1:ncol(df)
     out <- df %>%
       select(colNums) %>%
       rowwise() %>%
@@ -150,7 +150,7 @@ mopAccents <- function(s, cols=NULL){
   if("data.frame" %in% class(s)){ 
     df <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(df)) %||% 1:ncol(df
+    colNums <- match(cols,names(df)) %||% 1:ncol(df)
     out <- df %>%
       select(colNums) %>%
       rowwise() %>%
@@ -182,7 +182,7 @@ mopDictionaryMatch <- function(s, dict, cols=NULL){
   if("data.frame" %in% class(s)){ 
     dd <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(dd)) %||% 1
+    colNums <- match(cols,names(dd)) %||% 1:ncol(df)
     
     out <- dd %>%
       select(colNums) %>%
@@ -214,7 +214,7 @@ mopDates <- function(s, from, to = NULL, cols=NULL){
   if("data.frame" %in% class(s)){ 
     dd <- tbl_df(s)
     #cols <- c("fuente","implicado")
-    colNums <- match(cols,names(dd)) %||% 1
+    colNums <- match(cols,names(dd)) %||% 1:ncol(df)
 
     out <- dd %>%
       select(colNums) %>%
