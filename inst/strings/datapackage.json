@@ -1,0 +1,50 @@
+{
+    "name": "Datapackage-masacres",
+    "resources": [{
+        "name": "masacres",
+        "path": "strings.csv",
+        "ae_resource_info": {
+            "id": "masacres",
+            "public": "true",
+            "resource_type": "tbl",
+            "record_name": "observation"
+        },
+        "mediatype": "text/csv",
+        "format": "csv",
+        "dialect": {
+            "delimiter": ","
+        },
+        "schema": {
+            "fields": [{
+                "name": "lugar",
+                "type": "character",
+                "ae_field_info": {
+                    "id": "f",
+                    "data_type": "C",
+                    "label": "lugar"
+                }
+            }, {
+                "name": "implicado",
+                "type": "character",
+                "ae_field_info": {
+                    "id": "g",
+                    "data_type": "C",
+                    "label": "implicado"
+                }
+
+            }, {
+                "name": "fuente",
+                "type": "character",
+                "ae_field_info": {
+                    "id": "i",
+                    "data_type": "C",
+                    "label": "fuente"
+                }
+
+            }]
+
+        }
+
+    }]
+
+}

@@ -19,8 +19,11 @@ mopWord(s, pos="first")
 mopWord(s, pos="last")
 mopWord(df$implicado, pos="last")
 mopWord(mopWhiteSpace(df$implicado), pos="last")
-mop
+mopWord(df[,c("fuente","implicado")])
+
 mopLastWord(df$fuente)
+
+
 
 ### Split fixed
 s <- "Caserío La Mesa-Veredas- La Mesa, La D-anta y Mulatos"
