@@ -1,8 +1,8 @@
 ## utils 
 #' @export
 removeAccents <- function(string){
-  accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝñÑç"
-  translation <- "aeiouAEIOUaeiouyAEIOUYnNc"
+  accents <- "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝäëïöüÄËÏÖÜâêîôûñÑç"
+  translation <- "aeiouAEIOUaeiouyAEIOUaeiouAEIOUaeiouÂÊÎÔÛAEIOUnNc"
   chartr(accents, translation, string)
 }  
 
