@@ -1,3 +1,44 @@
+#' runMopper
+#' @name runMopper
+#' @description runMopper
+#' @param s string or dataframe
+#' @param pos string, "first" or "last"
+#' @return string
+#' @export
+#' @examples \dontrun{
+#' }
+runMopper <- function(dp, cleanId, opts, colIds = NULL, appendCol = FALSE){  
+  availableCleanerDp1 <- c("mopWord","mopSplitFixedPattern","mopWhiteSpace","mopStrChop","mopAccents","mopDates")
+  availableCleanerDp2 <- c("mopDictionaryMatch")
+  if(cleanId %in% availableCleanerDp1){    
+    dp <- getDpSelection(dp, cols = colIds)
+    df <- getDataframe(dp)    
+    # opts <- list(pos="first", tro = "fda")
+    cleanIdOptNames <- getCleanIdOpts(cleanId)    
+    ids <- sapply(names(opts), function(s){s %in% cleanIdOptNames})
+    opts <- opts[ids]
+    
+    params <- c(list(df), opts, cols = colIds)
+    #cleanId <- "mopWord"
+    dfout <- do.call(cleanId, params)
+    out <- newDatapkg(dfout, name = "output")
+  } else{
+    stop("no clean id found")
+  }
+  out
+}
+
+
+getCleanIdOpts <- function(cleanId){
+  out <- c()
+  if (cleanId == "mopWord") out <- "pos"
+  if (cleanId == "mopSplitFixedPattern") out <- c("pattern","splitLength")
+  if (cleanId == "mopWhiteSpace") out <- out <- c()
+  if (cleanId == "mopStrChop") out <- c("start","end")
+  if (cleanId == "mopAccents") out <- c()
+  out
+}
+
 
 #' mopWord
 #' @name mopWord

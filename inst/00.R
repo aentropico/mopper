@@ -8,6 +8,28 @@ document()
 
 
 
+
+
+###   Test Mopper with Dp's
+#### TODO test column selection for runMopper
+library(devtools)
+load_all()
+document()
+path <- system.file("masacres.csv", package="mopper")
+df <- read.csv(path, stringsAsFactors=FALSE)
+df <- df[,c("fuente","implicado")]
+dp <- newDatapkg(df)
+
+opts <- list(pos = "last")
+runMopper(dp, "mopWord", opts)
+
+opts <- list(pattern = "-", splitLength = 3)
+cleanId <- "mopSplitFixedPattern"
+dpout <- runMopper(dp, cleanId, opts)
+
+
+
+
 ### Get last word
 path <- system.file("masacres.csv", package="mopper")
 df <- read.csv(path, stringsAsFactors=FALSE)
@@ -87,12 +109,6 @@ url <- "http://www.iptolatlng.com?ip=189.122.89.181&type=json"
 res <- GET(url = url)
 
 GET(url = url, query = c(ip = ip, type='json'))
-
-  
-  
-  
-  
-  
 
 
 
